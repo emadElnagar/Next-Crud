@@ -6,7 +6,7 @@ export default function Header() {
       <nav className="bg-cyan-500 flex justify-between items-center p-4 text-white">
         <h1>Crud App</h1>
         <Link
-          href="#_"
+          href="/items/new"
           className="inline-block px-5 py-2 mx-auto text-white bg-blue-600 rounded-full hover:bg-blue-700 md:mx-0"
         >
           New Item
