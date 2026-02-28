@@ -12,8 +12,29 @@ export default async function handler(
   await connectToDatabase();
 
   // Get all items
-  if (req.method === "Get") {
+  if (req.method === "GET") {
     const items = await Item.find({});
     res.status(200).json(items);
+  }
+
+  // Create a new item
+  else if (req.method === "POST") {
+    try {
+      const { name, content } = req.body;
+      if (!name || !content) {
+        return res
+          .status(400)
+          .json({ message: "Name and content are required" });
+      }
+      const newItem = await Item.create({
+        name,
+        content,
+      });
+      res.status(201).json(newItem);
+    } catch (error: unknown) {
+      const message =
+        error instanceof Error ? error.message : "Internal server error";
+      return res.status(500).json({ message });
+    }
   }
 }
