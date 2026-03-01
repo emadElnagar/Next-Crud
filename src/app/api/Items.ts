@@ -37,4 +37,10 @@ export default async function handler(
       return res.status(500).json({ message });
     }
   }
+
+  // Not allowed request methods
+  else {
+    res.setHeader("Allow", ["GET", "POST"]);
+    res.status(405).end(`Method ${req.method} not allowed`);
+  }
 }
