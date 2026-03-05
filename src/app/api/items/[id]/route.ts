@@ -2,6 +2,26 @@ import { NextRequest, NextResponse } from "next/server";
 import connectToDatabase from "@/app/lib/mongodb";
 import Item from "@/app/models/Item";
 
+// Get single item
+export async function GET(
+  _req: NextRequest,
+  { params }: { params: { id: string } },
+) {
+  await connectToDatabase();
+  try {
+    const { id } = params;
+    const item = await Item.findById(id).select("-__v").lean();
+    if (!item) {
+      return NextResponse.json({ message: "Item not found" }, { status: 404 });
+    }
+    return NextResponse.json(item);
+  } catch (error: unknown) {
+    const message =
+      error instanceof Error ? error.message : "Internal server error";
+    return NextResponse.json(message);
+  }
+}
+
 // Update an item by ID
 export async function PUT(
   req: NextRequest,
