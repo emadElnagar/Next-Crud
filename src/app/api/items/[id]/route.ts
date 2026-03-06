@@ -58,3 +58,23 @@ export async function PUT(
     return NextResponse.json(message);
   }
 }
+
+// Delete an item
+export async function DELETE(
+  _req: NextRequest,
+  { params }: { params: { id: string } },
+) {
+  await connectToDatabase();
+  try {
+    const { id } = params;
+    const item = await Item.findByIdAndDelete(id);
+    if (!item) {
+      return NextResponse.json({ message: "Item not found" }, { status: 404 });
+    }
+    return NextResponse.json({ message: "Item deleted successfully" });
+  } catch (error: unknown) {
+    const message =
+      error instanceof Error ? error.message : "Internal server error";
+    return NextResponse.json(message);
+  }
+}
