@@ -1,6 +1,27 @@
+"use client";
+import { useState } from "react";
+import axios from "axios";
+
 export default function NewItemPage() {
+  const [name, setName] = useState("");
+  const [content, setContent] = useState("");
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    const response = await axios.post("/api/items", { name, content });
+    if (response.status === 201) {
+      alert("Item created successfully!");
+      setName("");
+      setContent("");
+    } else {
+      alert("Failed to create item: " + response.data.message);
+    }
+  };
   return (
-    <form className="max-w-md mx-auto mt-10 p-6 border border-gray-300 rounded-lg shadow-md">
+    <form
+      method="POST"
+      onSubmit={handleSubmit}
+      className="max-w-md mx-auto mt-10 p-6 border border-gray-300 rounded-lg shadow-md"
+    >
       <div className="mt-4">
         <label
           htmlFor="name"
