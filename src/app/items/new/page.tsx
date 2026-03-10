@@ -5,16 +5,31 @@ import axios from "axios";
 export default function NewItemPage() {
   const [name, setName] = useState("");
   const [content, setContent] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [message, setMessage] = useState("");
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const response = await axios.post("/api/items", { name, content });
-    if (response.status === 201) {
-      alert("Item created successfully!");
+
+    setLoading(true);
+    setMessage("");
+
+    try {
+      const res = await axios.post("/api/items", {
+        name,
+        content,
+      });
+
+      setMessage("Item created successfully");
       setName("");
       setContent("");
-    } else {
-      alert("Failed to create item: " + response.data.message);
+    } catch (error: unknown) {
+      setMessage(
+        error instanceof Error ? error.message : "Internal server error",
+      );
     }
+
+    setLoading(false);
   };
   return (
     <form
@@ -32,6 +47,8 @@ export default function NewItemPage() {
         <input
           type="text"
           id="name"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
           className="bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-lg 
           focus:ring-brand focus:border-brand block w-full px-2.5 py-2 shadow-xs"
           required
@@ -47,6 +64,8 @@ export default function NewItemPage() {
         <textarea
           id="content"
           rows={4}
+          value={content}
+          onChange={(e) => setContent(e.target.value)}
           className="bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-lg 
           focus:ring-brand focus:border-brand block w-full p-3.5 shadow-xs "
         ></textarea>
