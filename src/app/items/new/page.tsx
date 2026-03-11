@@ -49,8 +49,10 @@ export default function NewItemPage() {
           id="name"
           value={name}
           onChange={(e) => setName(e.target.value)}
-          className="bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-lg 
-          focus:ring-brand focus:border-brand block w-full px-2.5 py-2 shadow-xs"
+          className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight 
+          focus:outline-none 
+          focus:shadow-outline"
+          placeholder="Item name"
           required
         />
       </div>
@@ -66,8 +68,9 @@ export default function NewItemPage() {
           rows={4}
           value={content}
           onChange={(e) => setContent(e.target.value)}
-          className="bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-lg 
-          focus:ring-brand focus:border-brand block w-full p-3.5 shadow-xs "
+          className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight 
+          focus:outline-none focus:shadow-outline"
+          placeholder="Item content"
         ></textarea>
       </div>
 
