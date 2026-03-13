@@ -1,24 +1,34 @@
 import { NextRequest, NextResponse } from "next/server";
 import connectToDatabase from "@/app/lib/mongodb";
 import Item from "@/app/models/Item";
+import mongoose from "mongoose";
 
 // Get single item
 export async function GET(
   _req: NextRequest,
   { params }: { params: { id: string } },
 ) {
-  await connectToDatabase();
   try {
+    await connectToDatabase();
+
     const { id } = params;
+
+    // Validate ID
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return NextResponse.json({ message: "Invalid item id" }, { status: 400 });
+    }
+
     const item = await Item.findById(id).select("-__v").lean();
+
     if (!item) {
       return NextResponse.json({ message: "Item not found" }, { status: 404 });
     }
-    return NextResponse.json(item);
+
+    return NextResponse.json({ data: item }, { status: 200 });
   } catch (error: unknown) {
     const message =
       error instanceof Error ? error.message : "Internal server error";
-    return NextResponse.json(message);
+    return NextResponse.json({ message }, { status: 500 });
   }
 }
 
