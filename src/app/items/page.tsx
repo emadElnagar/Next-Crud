@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { FaEye } from "react-icons/fa";
 import { IoPencilSharp } from "react-icons/io5";
 import { AiFillDelete } from "react-icons/ai";
+import Link from "next/link";
 
 interface Item {
   _id: string | number;
@@ -79,9 +80,11 @@ export default function AllItemsPage() {
                   : item.content}
               </p>
               <div className="flex justify-center mt-4">
-                <FaEye className="cursor-pointer" />
-                <IoPencilSharp className="mx-4 cursor-pointer" />
-                <AiFillDelete className="cursor-pointer" />
+                <Link href={`/items/${item._id}`}>
+                  <FaEye title="View Details" className="cursor-pointer" />
+                </Link>
+                <IoPencilSharp title="Edit" className="mx-4 cursor-pointer" />
+                <AiFillDelete title="Delete" className="cursor-pointer" />
               </div>
             </div>
           </div>
