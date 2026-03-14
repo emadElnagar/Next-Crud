@@ -6,12 +6,12 @@ import mongoose from "mongoose";
 // Get single item
 export async function GET(
   _req: NextRequest,
-  { params }: { params: { id: string } },
+  { params }: { params: Promise<{ id: string }> },
 ) {
   try {
     await connectToDatabase();
 
-    const { id } = params;
+    const { id } = await params;
 
     // Validate ID
     if (!mongoose.Types.ObjectId.isValid(id)) {
