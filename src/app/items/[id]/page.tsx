@@ -39,8 +39,8 @@ export default async function SingleItemPage({ params }: PageProps) {
   }
   console.log("Fetched item:", item);
   return (
-    <div>
-      <h1 className="text-3xl text-heading text-center mt-8">
+    <div className="m-8">
+      <h1 className="text-3xl text-heading text-center mb-8">
         {item.data.name}
       </h1>
       <p className="text-base">{item.data.content}</p>
