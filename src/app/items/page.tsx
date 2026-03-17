@@ -83,7 +83,9 @@ export default function AllItemsPage() {
                 <Link href={`/items/${item._id}`}>
                   <FaEye title="View Details" className="cursor-pointer" />
                 </Link>
-                <IoPencilSharp title="Edit" className="mx-4 cursor-pointer" />
+                <Link href={`/items/${item._id}/update`}>
+                  <IoPencilSharp title="Edit" className="mx-4 cursor-pointer" />
+                </Link>
                 <AiFillDelete title="Delete" className="cursor-pointer" />
               </div>
             </div>

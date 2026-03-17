@@ -37,10 +37,9 @@ export default async function SingleItemPage({ params }: PageProps) {
   if (!item) {
     notFound();
   }
-  console.log("Fetched item:", item);
   return (
     <div className="m-8">
-      <h1 className="text-3xl text-heading text-center mb-8">
+      <h1 className="text-3xl text-heading text-center mb-4">
         {item.data.name}
       </h1>
       <p className="text-base">{item.data.content}</p>
