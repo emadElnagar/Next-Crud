@@ -1,41 +1,69 @@
-export default async function UpdateItemPage() {
+"use client";
+import { useParams } from "next/navigation";
+import { useState } from "react";
+
+export default function UpdateItemPage() {
+  const [name, setName] = useState("");
+  const [content, setContent] = useState("");
+  const [loading, setLoading] = useState(false);
+  const { id } = useParams();
   return (
     <div className="m-8">
       <h1 className="text-3xl text-heading text-center mb-4">
         Update Item Page
       </h1>
-      <p className="text-base">
+      <p className="text-center">
         This page will allow you to update an existing item. You can edit the
         name and content of the item and save the changes.
       </p>
-      <form className="mt-4">
-        <div className="mb-4">
-          <label htmlFor="name" className="block text-sm font-medium text-gray-700">
-            Name
+      <form
+        method="POST"
+        className="max-w-md mx-auto mt-10 p-6 border border-gray-300 rounded-lg shadow-md"
+      >
+        <div className="mt-4">
+          <label
+            htmlFor="name"
+            className="block mb-2.5 text-sm font-medium text-heading"
+          >
+            Item name
           </label>
           <input
             type="text"
             id="name"
-            name="name"
-            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight 
+          focus:outline-none 
+          focus:shadow-outline"
+            placeholder="Item name"
+            required
           />
         </div>
-        <div className="mb-4">
-          <label htmlFor="content" className="block text-sm font-medium text-gray-700">
-            Content
+        <div className="mt-4">
+          <label
+            htmlFor="content"
+            className="block mb-2.5 text-sm font-medium text-heading"
+          >
+            Item content
           </label>
           <textarea
             id="content"
-            name="content"
             rows={4}
-            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-          />
+            value={content}
+            onChange={(e) => setContent(e.target.value)}
+            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight 
+          focus:outline-none focus:shadow-outline"
+            placeholder="Item content"
+          ></textarea>
         </div>
+
         <button
           type="submit"
-          className="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+          className="inline-block px-5 py-2 mx-auto mt-4 text-white bg-blue-600 rounded-full cursor-pointer
+        hover:bg-blue-700 md:mx-0"
+          disabled={loading}
         >
-          Save Changes
+          {loading ? "Creating..." : "Submit"}
         </button>
       </form>
     </div>
