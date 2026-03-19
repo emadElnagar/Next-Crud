@@ -37,10 +37,12 @@ export async function PUT(
   req: NextRequest,
   { params }: { params: { id: string } },
 ) {
-  await connectToDatabase();
   try {
-    const { id } = params;
+    await connectToDatabase();
+
+    const { id } = await params;
     const { name, content } = await req.json();
+
     if (!name || !content) {
       return NextResponse.json(
         { message: "Name and content are required" },
