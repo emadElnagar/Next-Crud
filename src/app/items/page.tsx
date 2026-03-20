@@ -36,6 +36,20 @@ export default function AllItemsPage() {
     };
     fetchItems();
   }, []);
+
+  // Delete item handler
+  const handleDelete = async (id: string | number) => {
+    try {
+      await axios.delete(`/api/items/${id}`);
+      setItems(items.filter((item) => item._id !== id));
+    } catch (err: unknown) {
+      alert(
+        (err as { response?: { data?: { message?: string } } }).response?.data
+          ?.message || "Failed to delete item",
+      );
+    }
+  };
+
   return (
     <div className="m-8">
       <h1 className="text-2xl text-center font-bold mb-4">All Items</h1>
@@ -86,7 +100,11 @@ export default function AllItemsPage() {
                 <Link href={`/items/${item._id}/update`}>
                   <IoPencilSharp title="Edit" className="mx-4 cursor-pointer" />
                 </Link>
-                <AiFillDelete title="Delete" className="cursor-pointer" />
+                <AiFillDelete
+                  onClick={() => handleDelete(item._id)}
+                  title="Delete"
+                  className="cursor-pointer"
+                />
               </div>
             </div>
           </div>
