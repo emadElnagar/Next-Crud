@@ -76,9 +76,9 @@ export async function DELETE(
   _req: NextRequest,
   { params }: { params: { id: string } },
 ) {
-  await connectToDatabase();
   try {
-    const { id } = params;
+    await connectToDatabase();
+    const { id } = await params;
     const item = await Item.findByIdAndDelete(id);
     if (!item) {
       return NextResponse.json({ message: "Item not found" }, { status: 404 });

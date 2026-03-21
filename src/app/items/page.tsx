@@ -42,6 +42,7 @@ export default function AllItemsPage() {
     try {
       await axios.delete(`/api/items/${id}`);
       setItems(items.filter((item) => item._id !== id));
+      alert("Item deleted successfully");
     } catch (err: unknown) {
       alert(
         (err as { response?: { data?: { message?: string } } }).response?.data
